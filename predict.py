@@ -37,7 +37,7 @@ def predict(east_detect, img_path, pixel_threshold, quiet=False):
     d_wight, d_height = resize_image(img, cfg.max_predict_img_size)
     img = img.resize((d_wight, d_height), Image.NEAREST).convert('RGB')
     img = image.img_to_array(img)
-    img = preprocess_input(img, mode='tf')
+    img = preprocess_input(img)
     x = np.expand_dims(img, axis=0)
     y = east_detect.predict(x)
 
