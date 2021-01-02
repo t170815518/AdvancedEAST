@@ -18,6 +18,7 @@ def gen(batch_size=cfg.batch_size, is_val=False):
     else:
         with open(os.path.join(cfg.data_dir, cfg.train_fname), 'r') as f_train:
             f_list = f_train.readlines()
+    f_list = [x for x in f_list if x.strip()]
     while True:
         for i in range(batch_size):
             # random gen an image name
@@ -29,7 +30,7 @@ def gen(batch_size=cfg.batch_size, is_val=False):
                                     img_filename)
             img = image.load_img(img_path)
             img = image.img_to_array(img)
-            x[i] = preprocess_input(img, mode='tf')
+            x[i] = preprocess_input(img)
             gt_file = os.path.join(cfg.data_dir,
                                    cfg.train_label_dir_name,
                                    img_filename[:-4] + '_gt.npy')

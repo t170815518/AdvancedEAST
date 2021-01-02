@@ -122,7 +122,11 @@ def preprocess():
             for anno, i in zip(anno_list, range(len(anno_list))):
                 anno_colums = anno.strip().split(',')
                 anno_array = np.array(anno_colums)
-                xy_list = np.reshape(anno_array[:8].astype(float), (4, 2))
+                try:
+                    xy_list = np.reshape(anno_array[:8].astype(float), (4, 2))
+                except ValueError:
+                    print("Unable to process {} (skipped this annotation)".format(anno))
+                    continue
                 xy_list[:, 0] = xy_list[:, 0] * scale_ratio_w
                 xy_list[:, 1] = xy_list[:, 1] * scale_ratio_h
                 xy_list = reorder_vertexes(xy_list)
